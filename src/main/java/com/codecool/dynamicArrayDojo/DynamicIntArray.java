@@ -54,7 +54,19 @@ public class DynamicIntArray {
         length = this.dataArray.length;
     }
     public void insert(int place, int number) {
-        // check for positive place
-        // if place is too large just add number
+        if (place < 0) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        int[] newArray = new int[length + 1];
+        if (place >= length) {
+            System.arraycopy(dataArray, 0, newArray, 0, length);
+            newArray[newArray.length - 1] = number;
+        } else {
+            System.arraycopy(dataArray, 0, newArray, 0, place);
+            newArray[place] = number;
+            System.arraycopy(dataArray, place, newArray, place + 1, length - place);
+        }
+        dataArray = newArray;
+        length = newArray.length;
     }
 }
